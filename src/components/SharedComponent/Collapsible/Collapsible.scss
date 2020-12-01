@@ -1,0 +1,54 @@
+.expantionPanelHeader {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding:0;
+    .countBracket {
+        padding-left: 2%;
+        padding-right: 2%;
+        width: 1rem;
+    }
+    .requiredClass {
+        display: flex;
+        align-items: center;
+        .colonClass {
+            padding-left: 2%;
+            padding-right: 2%;
+        }
+        .deleteIcon {
+            float: right !important;
+            margin: 0 1rem 0 1rem !important;
+        }
+    }
+    .expantionPanelIcons {
+        display: flex;
+        align-items: center;
+        width: 3rem;
+    }
+}
+
+.panelClass {
+    display: grid;
+    grid-column: 1;
+    .detailsForm {
+        min-width: calc(100% - 1rem);
+    }
+    .hideClass {
+        display: none;
+    }
+}
+
+.notObject {
+    display: flex;
+    .emptyDiv {
+        width: 3rem;
+    }
+}
+
+.dropDownClass {
+    width: 10rem !important;
+}
+
+.highLight {
+    background-color: #b8ffcb !important;
+}

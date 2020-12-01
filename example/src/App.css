@@ -1,0 +1,10 @@
+.container{
+    max-width: 30rem;
+    max-height:30rem;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}
+.mainContainer{
+    position: relative;
+}

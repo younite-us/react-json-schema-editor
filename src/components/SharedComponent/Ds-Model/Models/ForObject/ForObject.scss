@@ -1,0 +1,28 @@
+.ModelContainer {
+    display: grid;
+    width: 100%;
+    padding: 2%;
+    background-color: lightgray;
+    .formContainer {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+        .formBox {
+            display: grid;
+            padding: 1%;
+            .requiredClass{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+        .divider {
+            min-height: 100%;
+            width: 0.1rem;
+            background: red;
+            margin-right: 2px;
+            margin-left: 2px;
+        }
+    }
+}
