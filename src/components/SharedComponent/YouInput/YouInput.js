@@ -1,6 +1,48 @@
-import React, { Component } from 'react';
-import Input from '@material-ui/core/Input';
+import InputBase from '@material-ui/core/InputBase';
+import { withStyles } from '@material-ui/core/styles';
+import React ,{ Component } from 'react';
 import './_YouInput.scss';
+
+
+
+const styles = theme => ({
+  // textField: {
+  //   marginLeft: theme.spacing.unit,
+  //   marginRight: theme.spacing.unit,
+  // },
+
+  bootstrapInput: {
+    borderRadius: 4,
+    position: 'relative',
+    backgroundColor: theme.palette.common.white,
+    border: '1px solid #ced4da',
+    fontSize: 16,
+    width: 'auto',
+    padding: '10px 12px',
+    transition: theme.transitions.create(['border-color', 'box-shadow']),
+    // Use the system font instead of the default Roboto font.
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    '&:focus': {
+      borderRadius: 4,
+      borderColor: '#80bdff',
+      boxShadow: '0 0 0 0.1rem rgba(0,123,255,.25)',
+    },
+  }
+});
+
+
+
 
 class YouInput extends Component {
   constructor(props) {
@@ -18,13 +60,13 @@ class YouInput extends Component {
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.setState({
       elementInputValue: this.props.inputName
     });
   }
 
-  onChangeInput(event){
+  onChangeInput(event) {
     this.setState({
       elementInputValue: event.target.value
     });
@@ -32,34 +74,39 @@ class YouInput extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
-      <Input
+      // <Input
+      //   autoFocus={true}
+      //   className="you-input"
+      //   name={this.props.inputName}
+      //   placeholder='Enter Text'
+      //   value = {this.state.elementInputValue}
+      //   onBlur={this.props.onBlur}
+      //   onChange = {this.onChangeInput.bind(this)}
+      //   variant="outlined"
+      //   size="small"
+      // />
+      <InputBase
+        id="bootstrap-input"
+        // defaultValue="react-bootstrap"
+        classes={{
+          root: classes.bootstrapRoot,
+          input: classes.bootstrapInput,
+        }}
+        required = {true}
         autoFocus={true}
-        // type={this.props.type}
-        className="you-input"
+        // className="you-input"
         name={this.props.inputName}
-        placeholder='Enter Text'//{this.props.inputPlaceholder}
-        // s={this.props.columnCount} label={this.props.inputLabel}
-        // value={this.props.elementInputValue}
+        placeholder='Enter Text'
         value = {this.state.elementInputValue}
-        onBlur={this.props.onBlur} //{this.onChangeText}//
+        onBlur={this.props.onBlur}
         onChange = {this.onChangeInput.bind(this)}
-        variant="outlined"
+        // variant="outlined"
         size="small"
       />
     );
   }
 }
 
-// YouInput.propTypes = {
-// //   autoFocus: PropTypes.bool,
-//   type: PropTypes.string,
-//   inputPlaceholder: PropTypes.string,
-//   inputLabel: PropTypes.string,
-// //   inputValue: PropTypes.string,
-// //   columnCount: PropTypes.number,
-//   onChange: PropTypes.func,
-//   inputName: PropTypes.string
-// };
-
-export default YouInput;
+export default withStyles(styles)(YouInput);

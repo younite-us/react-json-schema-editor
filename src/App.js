@@ -2,13 +2,17 @@ import React from 'react';
 import './App.css';
 import JsonBuilderContainer from './components/Builder-container/Builder-container';
 import { setWidthAndHeight } from './components/constants';
-
-function App() {
+import { updateJsonElement } from './redux/action/jsonBuilderAction';
+import store from './redux/store/store';
+function App(props) {
   const size = '100rem';
-  setWidthAndHeight(1600 , 700 , 'px');
+  setWidthAndHeight(1600, 700, 'px');
+  if (props.importJson) {
+    store.dispatch(updateJsonElement(props.importJson));
+  }
   return (
     <div className="AppCss">
-      <JsonBuilderContainer width = {size} height={size}/>
+      <JsonBuilderContainer {...props} width={size} height={size} />
     </div>
   );
 }

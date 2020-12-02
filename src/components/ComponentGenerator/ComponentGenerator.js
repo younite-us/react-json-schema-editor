@@ -10,6 +10,8 @@ import TypeLabel from '../SharedComponent/Type-Label/TypeLabel';
 import JsonField from '../JsonField/JsonField';
 import JsonBuilder from '../JsonBuilder/JsonBuilder';
 import DsModel from '../SharedComponent/Ds-Model/Ds-Model';
+import CancelIcon from '@material-ui/icons/Cancel';
+import SettingsIcon from '@material-ui/icons/Settings';
 class ComponentGenerator extends Component {
     constructor(props) {
         super(props);
@@ -29,9 +31,9 @@ class ComponentGenerator extends Component {
             case "collapsible":
                 return <Collapsible childItems={this.props.childItems} {...this.props} />;
             case "addMoreIcon":
-                return <AddMore {...this.props} />;
+                return <AddMore style={{color:"#A0A0A0"}} {...this.props} />;
             case "arrowDownUp":
-                return <ArrowDownUp {...this.props} />;
+                return <ArrowDownUp style={{color:"#A0A0A0"}} {...this.props} />;
             case "typeLabel":
                 return <TypeLabel {...this.props} />;
             case "jsonField":
@@ -41,9 +43,13 @@ class ComponentGenerator extends Component {
             case "JsonBuilder":
                 return <JsonBuilder patchJson={this.props.patchJson}{...this.props} />
             case "deleteIcon":
-                return <DeleteIcon {...this.props} />
+                return <DeleteIcon style={{color:"#A0A0A0"}} {...this.props} />
             case "Model":
                 return <DsModel {...this.props} />
+            case "CancelIcon":
+                return <CancelIcon style={{color:"#A0A0A0"}} {...this.props} />
+            case "SettingsIcon":
+                return <SettingsIcon style={{color:"#A0A0A0"}} {...this.props} />
             default:
                 return ""
         }

@@ -241,7 +241,6 @@ class JsonBuilder extends Component {
         } else if (oldKey === undefined) {
             this.childItems.map((child) => {
                 var jsonKey = Object.keys(child);
-                console.log('jsonKey[0] === childName ', child , childName);
                 if (jsonKey[0] === childName) {
                     childItems.map((item) => {
                         var itemJsonKey = Object.keys(item);

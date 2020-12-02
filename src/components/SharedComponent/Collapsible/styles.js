@@ -7,7 +7,6 @@ export default theme => ({
     expantionPanelHeader :{
         display: 'flex',
         alignItems: 'center',
-        // minWidth: '100%',
         padding:0,
         marginLeft:'5px'
     },
@@ -16,7 +15,6 @@ export default theme => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent:'flex-start',
-        // minWidth: '100%',
         padding:0,
         alignSelf:'flex-start'
     },
@@ -36,9 +34,7 @@ export default theme => ({
         paddingRight: '2%',
     },
     deleteIcon :{
-        float: 'right',
-        // marginTop: '1rem',
-        // marginBottom:'1rem'
+        float: 'right'
     },
     expantionPanelIcons :{
         display: 'flex',

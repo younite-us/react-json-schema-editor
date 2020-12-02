@@ -1,5 +1,6 @@
 let childItems = [];
 export function traverse(jsonObj) {
+    // childItems = [];
     if (jsonObj !== null && typeof jsonObj == "object") {
         Object.entries(jsonObj).forEach(([key, value]) => {
             // key is either an array index or object key

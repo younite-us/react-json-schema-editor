@@ -1,16 +1,13 @@
-import { IconButton, Typography, withStyles , Icon , Modal } from '@material-ui/core';
+import { IconButton, Modal, Typography, withStyles } from '@material-ui/core';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import CancelIcon from '@material-ui/icons/Cancel';
-import Edit from '@material-ui/icons/Edit';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import HighlightOffRoundedIcon from '@material-ui/icons/HighlightOffRounded';
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import ComponentGenerator from '../../ComponentGenerator/ComponentGenerator';
 import './Collapsible.scss';
 import styles from './styles.js';
-import HighlightOffRoundedIcon from '@material-ui/icons/HighlightOffRounded';
 
 
 const StyledMatPanel = withStyles({
@@ -18,7 +15,6 @@ const StyledMatPanel = withStyles({
         borderRadius: 0,
         border: 0,
         padding: 0,
-        // minWidth: '90%',
         boxShadow: 'none',
         flexGrow: 1
     },
@@ -30,8 +26,8 @@ const StyledMatPanelSummary = withStyles({
         border: 0,
         padding: 0,
         paddingLeft: '6px',
-        // minWidth: '100%',
-        margin: 0
+        margin: 0,
+        height: '10px'
     },
 })(ExpansionPanelSummary);
 
@@ -41,7 +37,6 @@ const StyledMatPanelDetails = withStyles({
         border: 0,
         padding: 0,
         paddingLeft: '6px',
-        // minWidth: '100%',
         margin: 0
     },
 })(ExpansionPanelDetails);
@@ -67,10 +62,6 @@ class Collapsible extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
-        //click delete
-        // if(nextProps.clickDelete){
-        //     this.props.onDeleteElement(this.props.currentElementIndex);
-        // }
         if (nextProps.newElementCount !== nextProps.newElementCount || nextProps.newElementCount !== 0) {
             this.setState({
                 elementCount: nextProps.newElementCount
@@ -236,14 +227,6 @@ class Collapsible extends Component {
         const { classes } = this.props;
         const compo = this.state;
         return (<div>
-            {/* {!this.state.isNewElement ? <div className={classes.expantionPanelHeaderRoot}>
-                <div className={classes.expantionPanelIcons}>
-                    <ComponentGenerator type='addMoreIcon' addMore={this.props.addMore.bind(this, this.props.currentElementIndex, this.props.newElementCount)} />
-                    <ComponentGenerator type='arrowDownUp' expanded={this.props.expanded} handleChange={this.props.expandClick} />
-                </div>
-                <h4>ModelSchema</h4>
-                this.state.isNewElement ? classes.expantionPanelHide : 
-            </div> : ''} */}
             <StyledMatPanel expanded={true} classes={{ root: classes.expansionPanelStyle }} >
                 <StyledMatPanelSummary
                     className={classes.expantionPanelHeader}
@@ -261,7 +244,8 @@ class Collapsible extends Component {
                                         inputName={compo.inputName}
                                         onChangeInput={this.setInputValue.bind(this)}
                                         onBlur={this.onChangeInputOfElement.bind(this)} />
-                                    <MoreVertIcon className={classes.colonClass} />
+                                    {/* <MoreVertIcon className={classes.colonClass} /> */}
+                                    <ComponentGenerator className={classes.checkBoxClass} checked={this.state.isRequired} onClick={this.isRequired.bind(this)} type='checkbox' />
                                 </div> : <div className={classes.requiredClass}></div>}
                         </div>
                         <div className={classes.dropDownClass}>
@@ -275,30 +259,28 @@ class Collapsible extends Component {
                         </div>
                         {this.state.defaultValue.label === 'Object' ?
                             <p className={classes.countBracket}>[{this.state.totalChildCount}]</p> : <p className={classes.countBracket}></p>}
-                        {this.state.isNewElement ?
-                            <div className={classes.requiredClass}>
-                                {/* is required condition value */}
-                                <ComponentGenerator className={classes.checkBoxClass} checked={this.state.isRequired} onClick={this.isRequired.bind(this)} type='checkbox' />
-                                <ComponentGenerator type='typeLabel' label='required' />
-                                <div onClick={this.onDeleteElement.bind(this)} className={classes.deleteIcon}><ComponentGenerator type='deleteIcon' /></div>
-                            </div> : ''}
+
                         {/* this is showdetails accordian */}
                         <div >
                             {this.state.isNewElement ? <div>
                                 {this.state.showDetails ?
-                                    <CancelIcon onClick={this.showDetailsClicked.bind(this)} />
+                                <ComponentGenerator type='CancelIcon' onClick={this.showDetailsClicked.bind(this)} />
+                                    // <CancelIcon onClick={this.showDetailsClicked.bind(this)} />
                                     :
-                                    <Edit onClick={this.showDetailsClicked.bind(this)} />
+                                    // <Edit onClick={this.showDetailsClicked.bind(this)} />
+                                    <ComponentGenerator type='SettingsIcon' onClick={this.showDetailsClicked.bind(this)} />
                                 }
                             </div> : ''}
                         </div>
+                        {this.state.isNewElement ?
+                            <div className={classes.requiredClass}>
+                                {/* is required condition value */}
+                                <div onClick={this.onDeleteElement.bind(this)} className={classes.deleteIcon}><ComponentGenerator type='deleteIcon' /></div>
+                            </div> : ''}
                     </div>
                 </StyledMatPanelSummary>
                 <StyledMatPanelDetails >
                     <div className={classes.panelClass}>
-                        {/* <div className={this.state.showDetails ? classes.detailsForm : classes.hideClass}>
-                            <ComponentGenerator type='Model' elementDetails={this.gotDetails.bind(this)} subType={this.state.defaultValue.label} />
-                        </div> */}
                         {this.state.defaultValue.label === 'Object' && this.props.expanded ?
                             <div>
                                 {this.state.childItems &&
@@ -368,7 +350,7 @@ class Collapsible extends Component {
                             color='primary'
                             onClick={() => { this.setState({ showDetails: false }) }}
                         >
-                            <HighlightOffRoundedIcon/>
+                            <HighlightOffRoundedIcon />
                         </IconButton>
                     </div>
                     <ComponentGenerator type='Model' elementDetails={this.gotDetails.bind(this)} subType={this.state.defaultValue.label} />

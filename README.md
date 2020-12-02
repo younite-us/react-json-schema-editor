@@ -7,7 +7,7 @@
 ## Install
 
 ```bash
-npm install --save ui-json-builder
+npm install --save younite-us/react-json-schema-editor
 ```
 
 ## Usage
@@ -15,12 +15,12 @@ npm install --save ui-json-builder
 ```jsx
 import React, { Component } from 'react'
 
-import MyComponent from 'ui-json-builder'
+import UiJson from 'ui-json-builder'
 import 'ui-json-builder/dist/index.css'
 
 class Example extends Component {
   render() {
-    return <MyComponent />
+    return <UiJson />
   }
 }
 ```

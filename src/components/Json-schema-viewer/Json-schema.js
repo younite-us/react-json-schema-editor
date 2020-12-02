@@ -1,10 +1,11 @@
+import { withStyles } from '@material-ui/core/styles';
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import { updateJsonElement , resetComponent } from '../../redux/action/jsonBuilderAction';
 import store from '../../redux/store/store';
 import './Json-schema.scss';
-import { withStyles } from '@material-ui/core/styles';
 import styles from './styles.js';
-import { TextField } from '@material-ui/core';
+import { traverse } from '../patchFIle';
 
 class JsonSchemaViewer extends Component {
     constructor(props) {
@@ -12,6 +13,13 @@ class JsonSchemaViewer extends Component {
         this.state = {
             jsonSchema: {}
         };
+    }
+    UNSAFE_componentWillReceiveProps = (nextProps) => {
+        if (nextProps.updatedRootJson) {
+            // document.getElementById("schema").value = {};
+            console.log('updatedRootJson ', nextProps.updatedRootJson);
+            this.setState({ jsonSchema: nextProps.updatedRootJson })
+        }
     }
     componentDidMount() {
         // if(props.updatedRootJson){
@@ -31,12 +39,20 @@ class JsonSchemaViewer extends Component {
         // console.log(' this.props.jsonSchema ', tempSchema);
     }
 
+    onJsonChange = (event) => {
+        console.log('change text ', JSON.parse(event.target.value));
+        // let resetKey = Math.random().toString(36).substring(7);
+        // store.dispatch(resetComponent(resetKey));
+        const jsonObj = JSON.parse(event.target.value);
+        store.dispatch(updateJsonElement(jsonObj));
+    }
+
     render() {
         const { classes } = this.props;
-        const oneChild = JSON.stringify(this.props.jsonSchema, undefined, 10)
+        const oneChild = JSON.stringify(this.state.jsonSchema, undefined, 10)
         return (
             // <div className={classes.compareContainer}>
-            <textarea name="body" className={classes.jsonView} value={oneChild} onChange={this.onJsonChange}></textarea>
+            <textarea name="body" id="schema" className={classes.jsonView} value={oneChild} onBlur={this.onJsonChange}></textarea>
             // <TextField
             //     id="standard-multiline-static"
             //     // label="Multiline"

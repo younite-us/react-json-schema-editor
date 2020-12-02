@@ -25,7 +25,7 @@ export default class UiJson extends Component {
       //   Example Component: {text}
       // </div>
       <Provider store={store}>
-        <App />
+        <App {...this.props} />
       </Provider>
     )
   }
