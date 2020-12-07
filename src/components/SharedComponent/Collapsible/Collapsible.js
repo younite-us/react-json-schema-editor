@@ -57,7 +57,8 @@ class Collapsible extends Component {
             totalChildCount: 0,
             showDetails: false,
             isRequired: false,
-            anchorEl: null
+            anchorEl: null,
+            elementCount:0
         };
     }
 
@@ -290,7 +291,7 @@ class Collapsible extends Component {
                     <div>
                         <ul style={{ listStyleType: 'none' }}>
                             {
-                                [...Array(this.props.newElementCount)].map((e, i) => {
+                                [...Array(this.state.elementCount)].map((e, i) => { //this.props.newElementCount
                                     const eleId = i + 1;
                                     const newEleKey = this.props.currentElementIndex + ':' + eleId;
                                     return <li key={newEleKey}><ComponentGenerator

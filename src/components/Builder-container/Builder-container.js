@@ -66,7 +66,7 @@ class JsonBuilderContainer extends Component {
                 </Grid>
                 <Grid item xs={12} className={classes.root} >
                     <div className={classes.jsonschema}>
-                        <JsonSchemaViewer />
+                        <JsonSchemaViewer updatedRootJson={this.props.updatedRootJson} />
                     </div>
                 </Grid>
             </Grid >

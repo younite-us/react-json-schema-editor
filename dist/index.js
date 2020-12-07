@@ -1574,7 +1574,8 @@ var Collapsible = /*#__PURE__*/function (_Component) {
       totalChildCount: 0,
       showDetails: false,
       isRequired: false,
-      anchorEl: null
+      anchorEl: null,
+      elementCount: 0
     };
     return _this;
   }
@@ -1756,7 +1757,7 @@ var Collapsible = /*#__PURE__*/function (_Component) {
       style: {
         listStyleType: 'none'
       }
-    }, this.state.childItems && [].concat(Array(this.props.newElementCount)).map(function (e, i) {
+    }, [].concat(Array(this.state.elementCount)).map(function (e, i) {
       var eleId = i + 1;
       var newEleKey = _this2.props.currentElementIndex + ':' + eleId;
       return /*#__PURE__*/React__default.createElement("li", {
@@ -2783,21 +2784,19 @@ var JsonSchemaViewer = /*#__PURE__*/function (_Component) {
 
   var _proto = JsonSchemaViewer.prototype;
 
-  _proto.componentDidMount = function componentDidMount() {
-    var _this2 = this;
+  _proto.componentDidMount = function componentDidMount() {};
 
-    store.subscribe(function () {
-      if (store.getState().createNewElementReducer.updatedRootJson) {
-        _this2.setState({
-          updatedRootJson: store.getState().createNewElementReducer.updatedRootJson
-        });
-      }
-    });
+  _proto.UNSAFE_componentWillReceiveProps = function UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.updatedRootJson) {
+      this.setState({
+        updatedRootJson: nextProps.updatedRootJson
+      });
+    }
   };
 
   _proto.render = function render() {
     var classes = this.props.classes;
-    var oneChild = JSON.stringify(this.state.updatedRootJson, undefined, 10);
+    var oneChild = JSON.stringify(this.props.updatedRootJson, undefined, 10);
     return (
       /*#__PURE__*/
       React__default.createElement("textarea", {
@@ -2813,9 +2812,7 @@ var JsonSchemaViewer = /*#__PURE__*/function (_Component) {
 }(React.Component);
 
 var mapStateToProps$3 = function mapStateToProps(store) {
-  return {
-    updatedRootJson: store.createNewElementReducer.rootJsonSchema
-  };
+  return {};
 };
 
 var JsonSchemaViewer$1 = reactRedux.connect(mapStateToProps$3)(styles$6.withStyles(styles$4)(JsonSchemaViewer));
@@ -2966,7 +2963,9 @@ var JsonBuilderContainer = /*#__PURE__*/function (_Component) {
       className: classes.root
     }, /*#__PURE__*/React__default.createElement("div", {
       className: classes.jsonschema
-    }, /*#__PURE__*/React__default.createElement(JsonSchemaViewer$1, null))));
+    }, /*#__PURE__*/React__default.createElement(JsonSchemaViewer$1, {
+      updatedRootJson: this.props.updatedRootJson
+    }))));
   };
 
   return JsonBuilderContainer;

@@ -30,29 +30,29 @@ class JsonSchemaViewer extends Component {
         //     jsonSchema: tempSchema
         // });
 
-        store.subscribe(() => {
-            if (store.getState().createNewElementReducer.updatedRootJson) {
-                this.setState(
-                    {
-                        updatedRootJson: store.getState().createNewElementReducer.updatedRootJson
-                    }
-                )
-            }
-        });
+        // store.subscribe(() => {
+        //     if (store.getState().createNewElementReducer.updatedRootJson) {
+        //         this.setState(
+        //             {
+        //                 updatedRootJson: store.getState().createNewElementReducer.updatedRootJson
+        //             }
+        //         )
+        //     }
+        // });
     }
-    // UNSAFE_componentWillReceiveProps(nextProps) {
-    //     if (nextProps.updatedRootJson) {
-            // this.setState(
-            //     {
-            //         updatedRootJson: nextProps.updatedRootJson
-            //     }
-            // )
-    //     }
-    // }
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        if (nextProps.updatedRootJson) {
+            this.setState(
+                {
+                    updatedRootJson: nextProps.updatedRootJson
+                }
+            )
+        }
+    }
 
     render() {
         const { classes } = this.props;
-        const oneChild = JSON.stringify(this.state.updatedRootJson, undefined, 10)
+        const oneChild = JSON.stringify(this.props.updatedRootJson, undefined, 10)
         return (
             // <div className={classes.compareContainer}>
             <textarea name="body" className={classes.jsonView} value={oneChild} onChange={this.onJsonChange}></textarea>
@@ -79,7 +79,7 @@ class JsonSchemaViewer extends Component {
 
 const mapStateToProps = function mapStateToProps(store) {
     return {
-        updatedRootJson: store.createNewElementReducer.rootJsonSchema
+        // updatedRootJson: store.createNewElementReducer.rootJsonSchema
     }
 }
 

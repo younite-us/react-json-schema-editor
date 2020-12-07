@@ -1516,7 +1516,8 @@ class Collapsible extends Component {
       totalChildCount: 0,
       showDetails: false,
       isRequired: false,
-      anchorEl: null
+      anchorEl: null,
+      elementCount: 0
     };
   }
 
@@ -1695,7 +1696,7 @@ class Collapsible extends Component {
       style: {
         listStyleType: 'none'
       }
-    }, this.state.childItems && [...Array(this.props.newElementCount)].map((e, i) => {
+    }, [...Array(this.state.elementCount)].map((e, i) => {
       const eleId = i + 1;
       const newEleKey = this.props.currentElementIndex + ':' + eleId;
       return /*#__PURE__*/React.createElement("li", {
@@ -2650,21 +2651,21 @@ class JsonSchemaViewer extends Component {
     };
   }
 
-  componentDidMount() {
-    store.subscribe(() => {
-      if (store.getState().createNewElementReducer.updatedRootJson) {
-        this.setState({
-          updatedRootJson: store.getState().createNewElementReducer.updatedRootJson
-        });
-      }
-    });
+  componentDidMount() {}
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.updatedRootJson) {
+      this.setState({
+        updatedRootJson: nextProps.updatedRootJson
+      });
+    }
   }
 
   render() {
     const {
       classes
     } = this.props;
-    const oneChild = JSON.stringify(this.state.updatedRootJson, undefined, 10);
+    const oneChild = JSON.stringify(this.props.updatedRootJson, undefined, 10);
     return (
       /*#__PURE__*/
       React.createElement("textarea", {
@@ -2679,9 +2680,7 @@ class JsonSchemaViewer extends Component {
 }
 
 const mapStateToProps$3 = function mapStateToProps(store) {
-  return {
-    updatedRootJson: store.createNewElementReducer.rootJsonSchema
-  };
+  return {};
 };
 
 var JsonSchemaViewer$1 = connect(mapStateToProps$3)(withStyles(styles$4)(JsonSchemaViewer));
@@ -2825,7 +2824,9 @@ class JsonBuilderContainer extends Component {
       className: classes.root
     }, /*#__PURE__*/React.createElement("div", {
       className: classes.jsonschema
-    }, /*#__PURE__*/React.createElement(JsonSchemaViewer$1, null))));
+    }, /*#__PURE__*/React.createElement(JsonSchemaViewer$1, {
+      updatedRootJson: this.props.updatedRootJson
+    }))));
   }
 
 }

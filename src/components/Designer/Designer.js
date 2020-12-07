@@ -44,9 +44,6 @@ class Designer extends Component {
 
     componentWillReceiveProps(props) {
         if (props.uploadedJson && props.uploadedJson !== null && this.json !== props.uploadedJson) {
-            // if (this.props.patchCompletFlag) {
-            //     store.dispatch(patchComplete(false));
-            // }
             this.jsonUploaded(props.uploadedJson)
         }
     }
