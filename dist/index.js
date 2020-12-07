@@ -1561,9 +1561,8 @@ var Collapsible = /*#__PURE__*/function (_Component) {
     };
 
     _this.getListElement = function (newEleKey, i) {
-      return /*#__PURE__*/React__default.createElement("li", {
-        key: newEleKey
-      }, /*#__PURE__*/React__default.createElement(ComponentGenerator, {
+      console.log('mounting new element ', newEleKey);
+      return /*#__PURE__*/React__default.createElement(ComponentGenerator, {
         type: "JsonBuilder",
         key: newEleKey,
         isNewElement: true,
@@ -1579,7 +1578,7 @@ var Collapsible = /*#__PURE__*/function (_Component) {
         selfDelete: _this.props.selfDelete,
         onChangeRequiredChild: _this.props.onChangeRequiredChild,
         onChangeDetailsChild: _this.props.onChangeDetailsChild
-      }));
+      });
     };
 
     _this.selectedTypeChild = [];
@@ -1783,7 +1782,9 @@ var Collapsible = /*#__PURE__*/function (_Component) {
     }, newArrayElements.map(function (e, i) {
       var eleId = i + 1;
       var newEleKey = _this2.props.currentElementIndex + ':' + eleId;
-      return _this2.getListElement(newEleKey, i);
+      return /*#__PURE__*/React__default.createElement("li", {
+        key: newEleKey
+      }, _this2.getListElement(newEleKey, i));
     }))) : ''), /*#__PURE__*/React__default.createElement(core.Modal, {
       "aria-labelledby": "simple-modal-title",
       "aria-describedby": "simple-modal-description",

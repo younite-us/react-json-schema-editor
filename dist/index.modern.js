@@ -1503,9 +1503,8 @@ class Collapsible extends Component {
     };
 
     this.getListElement = (newEleKey, i) => {
-      return /*#__PURE__*/React.createElement("li", {
-        key: newEleKey
-      }, /*#__PURE__*/React.createElement(ComponentGenerator, {
+      console.log('mounting new element ', newEleKey);
+      return /*#__PURE__*/React.createElement(ComponentGenerator, {
         type: "JsonBuilder",
         key: newEleKey,
         isNewElement: true,
@@ -1521,7 +1520,7 @@ class Collapsible extends Component {
         selfDelete: this.props.selfDelete,
         onChangeRequiredChild: this.props.onChangeRequiredChild,
         onChangeDetailsChild: this.props.onChangeDetailsChild
-      }));
+      });
     };
 
     this.selectedTypeChild = [];
@@ -1722,7 +1721,9 @@ class Collapsible extends Component {
     }, newArrayElements.map((e, i) => {
       const eleId = i + 1;
       const newEleKey = this.props.currentElementIndex + ':' + eleId;
-      return this.getListElement(newEleKey, i);
+      return /*#__PURE__*/React.createElement("li", {
+        key: newEleKey
+      }, this.getListElement(newEleKey, i));
     }))) : ''), /*#__PURE__*/React.createElement(Modal, {
       "aria-labelledby": "simple-modal-title",
       "aria-describedby": "simple-modal-description",

@@ -224,9 +224,10 @@ class Collapsible extends Component {
         }
     }
 
-    getListElement = (newEleKey ,i) => {
+    getListElement = (newEleKey, i) => {
+        console.log('mounting new element ', newEleKey);
+        return (
 
-        return (<li key={newEleKey}>
             <ComponentGenerator
                 type='JsonBuilder'
                 key={newEleKey}
@@ -244,7 +245,7 @@ class Collapsible extends Component {
                 onChangeRequiredChild={this.props.onChangeRequiredChild}
                 onChangeDetailsChild={this.props.onChangeDetailsChild}
             />
-        </li>)
+        )
 
     }
 
@@ -317,8 +318,10 @@ class Collapsible extends Component {
                         <ul style={{ listStyleType: 'none' }}>
                             {newArrayElements.map((e, i) => { //this.props.newElementCount
                                 const eleId = i + 1;
-                                const newEleKey = this.props.currentElementIndex + ':' + eleId; 
-                                return this.getListElement(newEleKey , i)
+                                const newEleKey = this.props.currentElementIndex + ':' + eleId;
+                                return <li key={newEleKey}>
+                                    {this.getListElement(newEleKey, i)}
+                                </li>
                             })}
                         </ul>
                     </div>
