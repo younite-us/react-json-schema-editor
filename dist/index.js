@@ -1560,6 +1560,28 @@ var Collapsible = /*#__PURE__*/function (_Component) {
       }
     };
 
+    _this.getListElement = function (newEleKey, i) {
+      return /*#__PURE__*/React__default.createElement("li", {
+        key: newEleKey
+      }, /*#__PURE__*/React__default.createElement(ComponentGenerator, {
+        type: "JsonBuilder",
+        key: newEleKey,
+        isNewElement: true,
+        id: newEleKey,
+        componentKey: newEleKey,
+        componentCreated: _this.props.componentCreated,
+        childElementNameChanged: _this.props.childElementNameChanged,
+        handleChildTypeChange: _this.props.handleChildTypeChange,
+        deleteRequestChild: _this.props.deleteRequestChild,
+        checkDeleteKey: _this.props.childDeleteKey,
+        indexInParentArray: i,
+        patchData: _this.state.childItems[i],
+        selfDelete: _this.props.selfDelete,
+        onChangeRequiredChild: _this.props.onChangeRequiredChild,
+        onChangeDetailsChild: _this.props.onChangeDetailsChild
+      }));
+    };
+
     _this.selectedTypeChild = [];
     _this.state = {
       expanded: false,
@@ -1695,6 +1717,7 @@ var Collapsible = /*#__PURE__*/function (_Component) {
   _proto.render = function render() {
     var _this2 = this;
 
+    var newArrayElements = [].concat(Array(this.state.elementCount));
     var classes = this.props.classes;
     var compo = this.state;
     return /*#__PURE__*/React__default.createElement("div", null, /*#__PURE__*/React__default.createElement("div", {
@@ -1757,28 +1780,10 @@ var Collapsible = /*#__PURE__*/function (_Component) {
       style: {
         listStyleType: 'none'
       }
-    }, [].concat(Array(this.state.elementCount)).map(function (e, i) {
+    }, newArrayElements.map(function (e, i) {
       var eleId = i + 1;
       var newEleKey = _this2.props.currentElementIndex + ':' + eleId;
-      return /*#__PURE__*/React__default.createElement("li", {
-        key: newEleKey
-      }, /*#__PURE__*/React__default.createElement(ComponentGenerator, {
-        type: "JsonBuilder",
-        key: newEleKey,
-        isNewElement: true,
-        id: newEleKey,
-        componentKey: newEleKey,
-        componentCreated: _this2.props.componentCreated,
-        childElementNameChanged: _this2.props.childElementNameChanged,
-        handleChildTypeChange: _this2.props.handleChildTypeChange,
-        deleteRequestChild: _this2.props.deleteRequestChild,
-        checkDeleteKey: _this2.props.childDeleteKey,
-        indexInParentArray: i,
-        patchData: _this2.state.childItems[i],
-        selfDelete: _this2.props.selfDelete,
-        onChangeRequiredChild: _this2.props.onChangeRequiredChild,
-        onChangeDetailsChild: _this2.props.onChangeDetailsChild
-      }), " ");
+      return _this2.getListElement(newEleKey, i);
     }))) : ''), /*#__PURE__*/React__default.createElement(core.Modal, {
       "aria-labelledby": "simple-modal-title",
       "aria-describedby": "simple-modal-description",
@@ -2797,15 +2802,12 @@ var JsonSchemaViewer = /*#__PURE__*/function (_Component) {
   _proto.render = function render() {
     var classes = this.props.classes;
     var oneChild = JSON.stringify(this.props.updatedRootJson, undefined, 10);
-    return (
-      /*#__PURE__*/
-      React__default.createElement("textarea", {
-        name: "body",
-        className: classes.jsonView,
-        value: oneChild,
-        onChange: this.onJsonChange
-      })
-    );
+    return /*#__PURE__*/React__default.createElement("textarea", {
+      name: "body",
+      className: classes.jsonView,
+      value: oneChild,
+      onChange: this.onJsonChange
+    });
   };
 
   return JsonSchemaViewer;

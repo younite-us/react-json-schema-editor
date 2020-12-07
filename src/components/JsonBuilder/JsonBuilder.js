@@ -59,12 +59,7 @@ class JsonBuilder extends Component {
         if (nextProps.patchJson && nextProps.patchJson.length > 0) {
             console.log('new patch ', nextProps.patchJson);
             if (!this.state.patchComplete) {
-                // console.log('inside patch file ', nextProps.patchJson);
                 this.patchJson(nextProps.patchJson);
-                // this.setState({
-                //     childItems: nextProps.patchJson
-                // });
-                // this.childItems = this.state.childItems;
             }
         }
         if (nextProps.patchData && !this.state.patchComplete && this.state.name !== 'root-node') {
@@ -393,9 +388,6 @@ class JsonBuilder extends Component {
                         onChangeDetails={this.onChangeDetails.bind(this)}
                         onChangeDetailsChild={this.onChangeDetailsChild.bind(this)}
                         updatedComponent={this.state.updatedComponent}
-                    // selfDelete={this.state.selfDelete}
-                    // clickDelete={this.state.clickDelete}
-                    // thisElementIsDeleted={this.state.thisElementIsDeleted}
                     />
                 </div>);
         } else {

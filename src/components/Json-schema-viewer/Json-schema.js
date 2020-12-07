@@ -54,24 +54,7 @@ class JsonSchemaViewer extends Component {
         const { classes } = this.props;
         const oneChild = JSON.stringify(this.props.updatedRootJson, undefined, 10)
         return (
-            // <div className={classes.compareContainer}>
             <textarea name="body" className={classes.jsonView} value={oneChild} onChange={this.onJsonChange}></textarea>
-            // <TextField
-            //     id="standard-multiline-static"
-            //     // label="Multiline"
-            //     multiline
-            //     rowsMin="40"
-            //     value={oneChild}
-            //     // onChange={this.handleChange('multiline')}
-            //     className={classes.textField}
-            //     InputProps={{
-            //         classes: {
-            //            root: classes.root
-            //         }
-            //      }}
-            //     margin="normal"
-            // />
-            // </div >
         )
     }
 

@@ -58,7 +58,7 @@ class Collapsible extends Component {
             showDetails: false,
             isRequired: false,
             anchorEl: null,
-            elementCount:0
+            elementCount: 0
         };
     }
 
@@ -224,7 +224,32 @@ class Collapsible extends Component {
         }
     }
 
+    getListElement = (newEleKey ,i) => {
+
+        return (<li key={newEleKey}>
+            <ComponentGenerator
+                type='JsonBuilder'
+                key={newEleKey}
+                isNewElement={true}
+                id={newEleKey}
+                componentKey={newEleKey}
+                componentCreated={this.props.componentCreated}
+                childElementNameChanged={this.props.childElementNameChanged}
+                handleChildTypeChange={this.props.handleChildTypeChange}
+                deleteRequestChild={this.props.deleteRequestChild}
+                checkDeleteKey={this.props.childDeleteKey}
+                indexInParentArray={i}
+                patchData={this.state.childItems[i]}
+                selfDelete={this.props.selfDelete}
+                onChangeRequiredChild={this.props.onChangeRequiredChild}
+                onChangeDetailsChild={this.props.onChangeDetailsChild}
+            />
+        </li>)
+
+    }
+
     render() {
+        const newArrayElements = [...Array(this.state.elementCount)];
         const { classes } = this.props;
         const compo = this.state;
         return (<div>
@@ -290,28 +315,11 @@ class Collapsible extends Component {
                 {(this.state.defaultValue.label === 'Object' && this.props.expanded) || this.props.currentElementIndex === 0 ?
                     <div>
                         <ul style={{ listStyleType: 'none' }}>
-                            {
-                                [...Array(this.state.elementCount)].map((e, i) => { //this.props.newElementCount
-                                    const eleId = i + 1;
-                                    const newEleKey = this.props.currentElementIndex + ':' + eleId;
-                                    return <li key={newEleKey}><ComponentGenerator
-                                        type='JsonBuilder'
-                                        key={newEleKey}
-                                        isNewElement={true}
-                                        id={newEleKey}
-                                        componentKey={newEleKey}
-                                        componentCreated={this.props.componentCreated}
-                                        childElementNameChanged={this.props.childElementNameChanged}
-                                        handleChildTypeChange={this.props.handleChildTypeChange}
-                                        deleteRequestChild={this.props.deleteRequestChild}
-                                        checkDeleteKey={this.props.childDeleteKey}
-                                        indexInParentArray={i}
-                                        patchData={this.state.childItems[i]}
-                                        selfDelete={this.props.selfDelete}
-                                        onChangeRequiredChild={this.props.onChangeRequiredChild}
-                                        onChangeDetailsChild={this.props.onChangeDetailsChild}
-                                    /> </li>
-                                })}
+                            {newArrayElements.map((e, i) => { //this.props.newElementCount
+                                const eleId = i + 1;
+                                const newEleKey = this.props.currentElementIndex + ':' + eleId; 
+                                return this.getListElement(newEleKey , i)
+                            })}
                         </ul>
                     </div>
                     : ''}

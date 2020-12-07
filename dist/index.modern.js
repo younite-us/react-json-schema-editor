@@ -1502,6 +1502,28 @@ class Collapsible extends Component {
       }
     };
 
+    this.getListElement = (newEleKey, i) => {
+      return /*#__PURE__*/React.createElement("li", {
+        key: newEleKey
+      }, /*#__PURE__*/React.createElement(ComponentGenerator, {
+        type: "JsonBuilder",
+        key: newEleKey,
+        isNewElement: true,
+        id: newEleKey,
+        componentKey: newEleKey,
+        componentCreated: this.props.componentCreated,
+        childElementNameChanged: this.props.childElementNameChanged,
+        handleChildTypeChange: this.props.handleChildTypeChange,
+        deleteRequestChild: this.props.deleteRequestChild,
+        checkDeleteKey: this.props.childDeleteKey,
+        indexInParentArray: i,
+        patchData: this.state.childItems[i],
+        selfDelete: this.props.selfDelete,
+        onChangeRequiredChild: this.props.onChangeRequiredChild,
+        onChangeDetailsChild: this.props.onChangeDetailsChild
+      }));
+    };
+
     this.selectedTypeChild = [];
     this.state = {
       expanded: false,
@@ -1632,6 +1654,7 @@ class Collapsible extends Component {
   }
 
   render() {
+    const newArrayElements = [...Array(this.state.elementCount)];
     const {
       classes
     } = this.props;
@@ -1696,28 +1719,10 @@ class Collapsible extends Component {
       style: {
         listStyleType: 'none'
       }
-    }, [...Array(this.state.elementCount)].map((e, i) => {
+    }, newArrayElements.map((e, i) => {
       const eleId = i + 1;
       const newEleKey = this.props.currentElementIndex + ':' + eleId;
-      return /*#__PURE__*/React.createElement("li", {
-        key: newEleKey
-      }, /*#__PURE__*/React.createElement(ComponentGenerator, {
-        type: "JsonBuilder",
-        key: newEleKey,
-        isNewElement: true,
-        id: newEleKey,
-        componentKey: newEleKey,
-        componentCreated: this.props.componentCreated,
-        childElementNameChanged: this.props.childElementNameChanged,
-        handleChildTypeChange: this.props.handleChildTypeChange,
-        deleteRequestChild: this.props.deleteRequestChild,
-        checkDeleteKey: this.props.childDeleteKey,
-        indexInParentArray: i,
-        patchData: this.state.childItems[i],
-        selfDelete: this.props.selfDelete,
-        onChangeRequiredChild: this.props.onChangeRequiredChild,
-        onChangeDetailsChild: this.props.onChangeDetailsChild
-      }), " ");
+      return this.getListElement(newEleKey, i);
     }))) : ''), /*#__PURE__*/React.createElement(Modal, {
       "aria-labelledby": "simple-modal-title",
       "aria-describedby": "simple-modal-description",
@@ -2666,15 +2671,12 @@ class JsonSchemaViewer extends Component {
       classes
     } = this.props;
     const oneChild = JSON.stringify(this.props.updatedRootJson, undefined, 10);
-    return (
-      /*#__PURE__*/
-      React.createElement("textarea", {
-        name: "body",
-        className: classes.jsonView,
-        value: oneChild,
-        onChange: this.onJsonChange
-      })
-    );
+    return /*#__PURE__*/React.createElement("textarea", {
+      name: "body",
+      className: classes.jsonView,
+      value: oneChild,
+      onChange: this.onJsonChange
+    });
   }
 
 }
