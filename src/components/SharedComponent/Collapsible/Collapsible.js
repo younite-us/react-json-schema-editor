@@ -319,9 +319,11 @@ class Collapsible extends Component {
                             {newArrayElements.map((e, i) => { //this.props.newElementCount
                                 const eleId = i + 1;
                                 const newEleKey = this.props.currentElementIndex + ':' + eleId;
-                                return <li key={newEleKey}>
-                                    {this.getListElement(newEleKey, i)}
-                                </li>
+                                return (
+                                    <li key={newEleKey}>
+                                        {this.getListElement(newEleKey, i)}
+                                    </li>
+                                )
                             })}
                         </ul>
                     </div>
