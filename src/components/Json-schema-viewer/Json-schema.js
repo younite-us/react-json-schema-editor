@@ -1,25 +1,18 @@
-import { withStyles } from '@material-ui/core/styles';
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { updateJsonElement , resetComponent } from '../../redux/action/jsonBuilderAction';
 import store from '../../redux/store/store';
 import './Json-schema.scss';
+import { withStyles } from '@material-ui/core/styles';
 import styles from './styles.js';
-import { traverse } from '../patchFIle';
+import { TextField } from '@material-ui/core';
 
 class JsonSchemaViewer extends Component {
     constructor(props) {
         super();
         this.state = {
-            jsonSchema: {}
+            jsonSchema: {},
+            updatedRootJson:{}
         };
-    }
-    UNSAFE_componentWillReceiveProps = (nextProps) => {
-        if (nextProps.updatedRootJson) {
-            // document.getElementById("schema").value = {};
-            console.log('updatedRootJson ', nextProps.updatedRootJson);
-            this.setState({ jsonSchema: nextProps.updatedRootJson })
-        }
     }
     componentDidMount() {
         // if(props.updatedRootJson){
@@ -36,23 +29,33 @@ class JsonSchemaViewer extends Component {
         // this.setState({
         //     jsonSchema: tempSchema
         // });
-        // console.log(' this.props.jsonSchema ', tempSchema);
-    }
 
-    onJsonChange = (event) => {
-        console.log('change text ', JSON.parse(event.target.value));
-        // let resetKey = Math.random().toString(36).substring(7);
-        // store.dispatch(resetComponent(resetKey));
-        const jsonObj = JSON.parse(event.target.value);
-        store.dispatch(updateJsonElement(jsonObj));
+        store.subscribe(() => {
+            if (store.getState().createNewElementReducer.updatedRootJson) {
+                this.setState(
+                    {
+                        updatedRootJson: store.getState().createNewElementReducer.updatedRootJson
+                    }
+                )
+            }
+        });
     }
+    // UNSAFE_componentWillReceiveProps(nextProps) {
+    //     if (nextProps.updatedRootJson) {
+            // this.setState(
+            //     {
+            //         updatedRootJson: nextProps.updatedRootJson
+            //     }
+            // )
+    //     }
+    // }
 
     render() {
         const { classes } = this.props;
-        const oneChild = JSON.stringify(this.state.jsonSchema, undefined, 10)
+        const oneChild = JSON.stringify(this.state.updatedRootJson, undefined, 10)
         return (
             // <div className={classes.compareContainer}>
-            <textarea name="body" id="schema" className={classes.jsonView} value={oneChild} onBlur={this.onJsonChange}></textarea>
+            <textarea name="body" className={classes.jsonView} value={oneChild} onChange={this.onJsonChange}></textarea>
             // <TextField
             //     id="standard-multiline-static"
             //     // label="Multiline"

@@ -13,7 +13,7 @@ export function traverse(jsonObj) {
     }
     else {
         // jsonObj is a number or string
-        console.log('this is String ', jsonObj);
+        // console.log('this is String ', jsonObj);
     }
     return childItems;
 }

@@ -25,7 +25,6 @@ export function hp(percentProp) {
     if (num !== '100') {
         const firstH = height * parseInt(num);
         const finalHeightPercent = firstH / 100;
-        console.log('finalHeightPercent', height, 'percentProp ', percentProp, finalHeightPercent + unit);
         return finalHeightPercent + unit;
     } else {
         return height + unit;

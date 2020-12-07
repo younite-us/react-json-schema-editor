@@ -4,7 +4,8 @@
 import {
     UPDATE_JSON_ELEMENT,
     UPDATE_JSON_FLAG,
-    RESET_COMPONENT
+    RESET_COMPONENT,
+    PATCH_STATUS_FLAG
 } from '../action/jsonBuilderAction';
 
 /** set groups default state */
@@ -13,7 +14,8 @@ const initialGroupState = {
     rootJsonSchema: {},
     items: [],
     storeDeleteFlag: false,
-    refreshComponent: '1'
+    refreshComponent: '1',
+    patchCompletFlag:true
 };
 
 export function createNewElementReducer(state = initialGroupState, action) {
@@ -37,6 +39,11 @@ export function createNewElementReducer(state = initialGroupState, action) {
                 refreshComponent: action.payload
             });
             break;
+        case PATCH_STATUS_FLAG:
+            return Object.assign({}, state, {
+                ...state,
+                patchCompletFlag: action.payload
+            });
         default:
             return state;
     }

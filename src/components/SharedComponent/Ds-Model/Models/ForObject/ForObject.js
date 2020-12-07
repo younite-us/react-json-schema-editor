@@ -21,9 +21,10 @@ const ForObject = (props) => {
     const { classes } = props;
     return (
         <div className={classes.ModelContainer}>
+            <div className={classes.detailsLabels}>Details</div>
             <div className={classes.formContainer}>
                 <div className={classes.formBox}>
-                    <h4>Basic Information</h4>
+                    {/* <h4>Basic Information</h4> */}
                     {/* <div className='formFieldss'>
                         <TextField
                             id="standard-with-placeholder"
@@ -33,10 +34,6 @@ const ForObject = (props) => {
                             onBlur={((event) => inputChanged('name', event.target.value))}
                         />
                     </div> */}
-                    <div >
-                        <h5 className={classes.labels}>Description:</h5>
-                        <textarea onBlur={((event) => inputChanged('description', event.target.value))}></textarea>
-                    </div>
                     <div className={classes.formFieldss}>
                         <TextField
                             id="standard-with-placeholder"
@@ -45,6 +42,10 @@ const ForObject = (props) => {
                             margin="normal"
                             onBlur={((event) => inputChanged('def', event.target.value))}
                         />
+                    </div>
+                    <div >
+                        <h5 className={classes.labels}>Description:</h5>
+                        <textarea onBlur={((event) => inputChanged('description', event.target.value))}></textarea>
                     </div>
                 </div>
                 <div className={classes.divider} ></div>

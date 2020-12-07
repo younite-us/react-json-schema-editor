@@ -2,8 +2,8 @@ export default theme => ({
 
     ModelContainer: {
         display: 'grid',
-        width: '100 %',
-        padding: '2 %',
+        maxWidth: '100%',
+        padding: '4%',
         backgroundColor: 'white'
     },
     formContainer: {
@@ -11,8 +11,6 @@ export default theme => ({
         height: '100 %',
         display: 'flex',
         justifyContent: 'space-around'
-
-
     },
     formBox: {
         display: 'grid',
@@ -30,6 +28,9 @@ export default theme => ({
         // background: 'black',
         marginRight: '2px',
         marginLeft: '2px',
+    },
+    detailsLabels:{
+        fontSize:20
     }
 
 

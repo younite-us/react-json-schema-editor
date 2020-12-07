@@ -73,7 +73,31 @@ export default theme => ({
         height:'20rem',
         alignSelf:'center',
         justifyContent:'center',
-        position:'absolute'
+        position:'absolute',
+        right:'50vh',
+        top:'20vh'
+    },
+    modalHeader:{
+        maxWidth:'100%',
+        padding:'2%',
+        paddingLeft:'4%',
+        paddingRight:'4%',
+        height:'2rem',
+        display:'flex',
+        justifyContent:'space-between',
+        flexDirection:'row',
+        flex:1,
+        alignItems:'center',
+        backgroundColor:'#2b63bb'
+    },
+    closeIcon:{
+        top:0,
+        color:'white'
+    },
+    typeTitle:{
+        backGroundColor:'white'
+    },
+    hiddenClass:{
+        display:'none'
     }
-
 })

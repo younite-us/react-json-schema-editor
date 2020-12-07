@@ -36,7 +36,7 @@ const StyledMatPanelDetails = withStyles({
         borderRadius: 0,
         border: 0,
         padding: 0,
-        paddingLeft: '6px',
+        paddingLeft: '15px',
         margin: 0
     },
 })(ExpansionPanelDetails);
@@ -227,90 +227,73 @@ class Collapsible extends Component {
         const { classes } = this.props;
         const compo = this.state;
         return (<div>
-            <StyledMatPanel expanded={true} classes={{ root: classes.expansionPanelStyle }} >
-                <StyledMatPanelSummary
+            {/* <StyledMatPanel expanded={true} classes={{ root: classes.expansionPanelStyle }} > */}
+            {/* <StyledMatPanelSummary
                     className={classes.expantionPanelHeader}
-                >
-                    <div className={classes.expantionPanelHeader}>
-                        {this.state.defaultValue.label === 'Object' ?
-                            <div className={classes.expantionPanelIcons}>
-                                <ComponentGenerator type='addMoreIcon' addMore={this.props.addMore.bind(this, this.props.currentElementIndex, this.props.newElementCount)} />
+                > */}
+            <div className={classes.expantionPanelHeader}>
+                <div className={classes.expantionPanelHeader}>
+                    {this.state.defaultValue.label === 'Object' ?
+                        <div className={classes.expantionPanelIcons}>
+                            <ComponentGenerator type='addMoreIcon' addMore={this.props.addMore.bind(this, this.props.currentElementIndex, this.props.newElementCount)} />
+                            {this.props.currentElementIndex !== 0 ?
                                 <ComponentGenerator type='arrowDownUp' expanded={this.props.expanded} handleChange={this.props.expandClick} />
-                            </div> : <div className={classes.expantionPanelIcons}></div>}
-                        <div>
-                            {this.state.isNewElement ?
-                                <div className={classes.requiredClass}>
-                                    <ComponentGenerator type='input'
-                                        inputName={compo.inputName}
-                                        onChangeInput={this.setInputValue.bind(this)}
-                                        onBlur={this.onChangeInputOfElement.bind(this)} />
-                                    {/* <MoreVertIcon className={classes.colonClass} /> */}
-                                    <ComponentGenerator className={classes.checkBoxClass} checked={this.state.isRequired} onClick={this.isRequired.bind(this)} type='checkbox' />
-                                </div> : <div className={classes.requiredClass}></div>}
+                                :
+                                ''
+                            }
+                        </div> : <div className={classes.expantionPanelIcons}></div>}
+                    <div>
+                        {/* {this.state.isNewElement ? */}
+                        <div className={classes.requiredClass}>
+                            {this.state.isNewElement ? <ComponentGenerator type='input'
+                                inputName={compo.inputName}
+                                onChangeInput={this.setInputValue.bind(this)}
+                                onBlur={this.onChangeInputOfElement.bind(this)} />
+                                : ''}
+                            <ComponentGenerator className={this.state.isNewElement ? classes.checkBoxClass : classes.hiddenClass} checked={this.state.isRequired} onClick={this.isRequired.bind(this)} type='checkbox' />
                         </div>
-                        <div className={classes.dropDownClass}>
-                            {this.props.currentElementIndex !== 0 ? <ComponentGenerator type='dropdown'
-                                autocompleteName={this.props.autocompleteName}
-                                autocompletePlaceholder={this.props.autocompletePlaceholder}
-                                autocompleteValue={this.state.defaultValue}
-                                autocompleteObject={this.props.autocompleteObject}
-                                multiOption={this.props.multiOption}
-                                onChange={this.handleTypeChange.bind(this)} /> : <h4>ModelSchema</h4>}
-                        </div>
-                        {this.state.defaultValue.label === 'Object' ?
-                            <p className={classes.countBracket}>[{this.state.totalChildCount}]</p> : <p className={classes.countBracket}></p>}
-
-                        {/* this is showdetails accordian */}
-                        <div >
-                            {this.state.isNewElement ? <div>
-                                {this.state.showDetails ?
-                                <ComponentGenerator type='CancelIcon' onClick={this.showDetailsClicked.bind(this)} />
-                                    // <CancelIcon onClick={this.showDetailsClicked.bind(this)} />
-                                    :
-                                    // <Edit onClick={this.showDetailsClicked.bind(this)} />
-                                    <ComponentGenerator type='SettingsIcon' onClick={this.showDetailsClicked.bind(this)} />
-                                }
-                            </div> : ''}
-                        </div>
-                        {this.state.isNewElement ?
-                            <div className={classes.requiredClass}>
-                                {/* is required condition value */}
-                                <div onClick={this.onDeleteElement.bind(this)} className={classes.deleteIcon}><ComponentGenerator type='deleteIcon' /></div>
-                            </div> : ''}
+                            {/* // : <div className={classes.requiredClass}></div>} */}
                     </div>
-                </StyledMatPanelSummary>
-                <StyledMatPanelDetails >
-                    <div className={classes.panelClass}>
-                        {this.state.defaultValue.label === 'Object' && this.props.expanded ?
-                            <div>
-                                {this.state.childItems &&
-                                    [...Array(this.props.newElementCount)].map((e, i) => {
-                                        const eleId = i + 1;
-                                        const newEleKey = this.props.currentElementIndex + ':' + eleId;
-                                        return <ComponentGenerator
-                                            type='JsonBuilder'
-                                            key={newEleKey}
-                                            isNewElement={true}
-                                            id={newEleKey}
-                                            componentKey={newEleKey}
-                                            componentCreated={this.props.componentCreated}
-                                            childElementNameChanged={this.props.childElementNameChanged}
-                                            handleChildTypeChange={this.props.handleChildTypeChange}
-                                            deleteRequestChild={this.props.deleteRequestChild}
-                                            checkDeleteKey={this.props.childDeleteKey}
-                                            indexInParentArray={i}
-                                            patchData={this.state.childItems[i]}
-                                            selfDelete={this.props.selfDelete}
-                                            onChangeRequiredChild={this.props.onChangeRequiredChild}
-                                            onChangeDetailsChild={this.props.onChangeDetailsChild}
-                                        // thisElementIsDeleted={this.props.thisElementIsDeleted}
-                                        />
-                                    })}
-                                {/* {this.props.childItems &&
-                                this.props.childItems.map((child, i) => {
+                    <div className={classes.dropDownClass}>
+                        {this.props.currentElementIndex !== 0 ? <ComponentGenerator type='dropdown'
+                            autocompleteName={this.props.autocompleteName}
+                            autocompletePlaceholder={this.props.autocompletePlaceholder}
+                            autocompleteValue={this.state.defaultValue}
+                            autocompleteObject={this.props.autocompleteObject}
+                            multiOption={this.props.multiOption}
+                            onChange={this.handleTypeChange.bind(this)} /> : <h4>Properties</h4>}
+                    </div>
+                    {this.state.defaultValue.label === 'Object' ?
+                        <p className={classes.countBracket}>[{this.state.totalChildCount}]</p> : <p className={classes.countBracket}></p>}
+
+                    {/* this is showdetails accordian */}
+                    <div >
+                        {this.state.isNewElement ? <div>
+                            {this.state.showDetails ?
+                                <ComponentGenerator type='CancelIcon' onClick={this.showDetailsClicked.bind(this)} />
+                                :
+                                <ComponentGenerator type='SettingsIcon' onClick={this.showDetailsClicked.bind(this)} />
+                            }
+                        </div> : ''}
+                    </div>
+                    {this.state.isNewElement ?
+                        <div className={classes.requiredClass}>
+                            {/* is required condition value */}
+                            <div onClick={this.onDeleteElement.bind(this)} className={classes.deleteIcon}><ComponentGenerator type='deleteIcon' /></div>
+                        </div> : ''}
+                </div>
+                {/* </StyledMatPanelSummary> */}
+            </div>
+            {/* <StyledMatPanelDetails > */}
+            <div className={classes.panelClass}>
+                {(this.state.defaultValue.label === 'Object' && this.props.expanded) || this.props.currentElementIndex === 0 ?
+                    <div>
+                        <ul style={{ listStyleType: 'none' }}>
+                            {this.state.childItems &&
+                                [...Array(this.props.newElementCount)].map((e, i) => {
                                     const eleId = i + 1;
-                                const newEleKey = this.props.currentElementIndex + ':' + eleId;
-                                    return <ComponentGenerator
+                                    const newEleKey = this.props.currentElementIndex + ':' + eleId;
+                                    return <li key={newEleKey}><ComponentGenerator
                                         type='JsonBuilder'
                                         key={newEleKey}
                                         isNewElement={true}
@@ -322,37 +305,38 @@ class Collapsible extends Component {
                                         deleteRequestChild={this.props.deleteRequestChild}
                                         checkDeleteKey={this.props.childDeleteKey}
                                         indexInParentArray={i}
-                                        patchData= {child}
-                                    />
-                                })
-                            } */}
-                            </div>
-                            : ''}
+                                        patchData={this.state.childItems[i]}
+                                        selfDelete={this.props.selfDelete}
+                                        onChangeRequiredChild={this.props.onChangeRequiredChild}
+                                        onChangeDetailsChild={this.props.onChangeDetailsChild}
+                                    /> </li>
+                                })}
+                        </ul>
                     </div>
-                </StyledMatPanelDetails>
-            </StyledMatPanel>
+                    : ''}
+            </div>
+            {/* </StyledMatPanelDetails> */}
+            {/* </StyledMatPanel> */}
             <Modal
                 aria-labelledby="simple-modal-title"
                 aria-describedby="simple-modal-description"
-                open={this.state.showDetails}
+                open={this.state.showDetails} //this.state.showDetails
                 onClose={() => { this.setState({ showDetails: false }) }}
-            // style={styl}
-            // disableEscapeKeyDown={props.disableEscapeKeyDown}
-            // disableBackdropClick={props.disableBackdropClick}
             >
                 <div
-                    // style={getModalStyle(props)}
                     className={classes.muiModelClass}
                 >
                     <div className={classes.modalHeader}>
-                        <Typography component="h3" variant="h5" className="Details">Details</Typography>
+                        <div className="typeTitle"><Typography variant="h6" >String</Typography></div>
                         <IconButton
+                            className={classes.closeIcon}
                             color='primary'
                             onClick={() => { this.setState({ showDetails: false }) }}
                         >
                             <HighlightOffRoundedIcon />
                         </IconButton>
                     </div>
+
                     <ComponentGenerator type='Model' elementDetails={this.gotDetails.bind(this)} subType={this.state.defaultValue.label} />
                 </div>
             </Modal>

@@ -1,11 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import store from '../../redux/store/store';
-import { updateJsonElement } from '../../redux/action/jsonBuilderAction';
+import { updateJsonElement, patchComplete } from '../../redux/action/jsonBuilderAction';
 import ComponentGenerator from '../ComponentGenerator/ComponentGenerator';
 import { traverse } from '../patchFIle';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './styles.js';
+const sampleJson = {
+    "name": {
+        "type": "String"
+    },
+    "address": {
+        "state": {
+            "type": "String"
+        },
+        "city": {
+            "zip": {
+                "type": "String"
+            },
+            "street": {
+                "type": "String"
+            },
+            "provinence": {
+                "type": "String"
+            }
+        }
+    }
+}
 
 class Designer extends Component {
     constructor(props) {
@@ -17,23 +38,23 @@ class Designer extends Component {
             expansionPanelDetails: [],
             childItems: null,
             deleteEverything: false,
-            uniqueId: '1'
+            reset: 1
         };
     }
 
-    UNSAFE_componentWillReceiveProps(props) {
-        if (props.updatedRootJson && props.updatedRootJson.length>0 && props.updatedRootJson !== null && this.json !== props.updatedRootJson) {
-            // console.log('changed json in designer inside if ..... ', props.updatedRootJson);
-            this.jsonUploaded(props.updatedRootJson)
-        }
-        if(props.refreshComponent !== this.state.uniqueId){
-            this.setState({uniqueId:props.refreshComponent});
+    componentWillReceiveProps(props) {
+        if (props.uploadedJson && props.uploadedJson !== null && this.json !== props.uploadedJson) {
+            // if (this.props.patchCompletFlag) {
+            //     store.dispatch(patchComplete(false));
+            // }
+            this.jsonUploaded(props.uploadedJson)
         }
     }
 
     jsonUploaded(json) {
         if (traverse(json) !== this.childItems) {
-            // this.clearOldData();
+            this.clearOldData();
+            this.childItems = [];
             this.childItems = traverse(json);
             this.json = json;
             this.setState({
@@ -72,9 +93,10 @@ class Designer extends Component {
     render() {
         const { classes } = this.props;
         return (
-            <div className={classes.designerContainer} key={this.state.uniqueId}>
+            <div className={classes.designerContainer}>
                 <ComponentGenerator type='JsonBuilder' isNewElement={false} id='-1' patchJson={this.state.childItems ? this.state.childItems : []} componentCreated={this.componentCreated.bind(this)} componentKey={0} />
-            </div>);
+            </div>
+        );
     }
 
 }
@@ -82,7 +104,7 @@ class Designer extends Component {
 const mapStateToProps = function mapStateToProps(store) {
     return {
         updatedRootJson: store.createNewElementReducer.rootJsonSchema,
-        refreshComponent:store.createNewElementReducer.refreshComponent
+        patchCompletFlag: store.createNewElementReducer.patchCompletFlag
     }
 }
 

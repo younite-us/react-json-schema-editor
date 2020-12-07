@@ -18,13 +18,6 @@ class JsonBuilderContainer extends Component {
         };
     }
 
-    // handleChange(value) {
-    //     this.value = value;
-    //     if (this.value === 'designer' && this.state.updatedRootJson !== '') {
-    //         store.dispatch(updateJsonElement(this.state.updatedRootJson));
-    //     }
-    //     this.setState({ value });
-    // }
     UNSAFE_componentWillReceiveProps = (nextProps) => {
         // if (nextProps.importJson) {
         //     store.dispatch(updateJsonElement(this.props.importJson));
@@ -37,6 +30,9 @@ class JsonBuilderContainer extends Component {
         //         updatedRootJson: nextProps.updatedRootJson
         //     });
         // }
+        if (nextProps.importJson) {
+            store.dispatch(updateJsonElement(nextProps.importJson));
+        }
     }
 
     // static getDerivedStateFromProps(nextProps, state) {
@@ -61,28 +57,19 @@ class JsonBuilderContainer extends Component {
     render() {
         const { classes } = this.props;
         const { value } = this.state;
-        // className={classes.demo}
         return (
-            // className={classes.builderContainer}
-            // <div className={classes.builderContainer}>
             <Grid container style={{ width: '100%' }} alignItems="stretch" justify="center" spacing={0}>
                 <Grid item xs={12} className={classes.root} >
-                    {/* < div className={classes.builderGrid} > */}
                     <div className={classes.designer}>
-                        <Designer />
+                        <Designer uploadedJson={this.props.importJson}/>
                     </div>
                 </Grid>
-                {/* <Grid item xs={12} > */}
-                {/* <div className={classes.divider} ></div> */}
-                {/* </Grid> */}
                 <Grid item xs={12} className={classes.root} >
                     <div className={classes.jsonschema}>
                         <JsonSchemaViewer />
                     </div>
-                    {/* </div > */}
                 </Grid>
             </Grid >
-            // </div>
         )
     }
 

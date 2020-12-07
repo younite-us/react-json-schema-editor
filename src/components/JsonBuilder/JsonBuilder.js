@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import store from '../../redux/store/store';
 import ComponentGenerator from '../ComponentGenerator/ComponentGenerator';
 import { TYPES } from '../Models';
-import { updateJsonFlag } from '../../redux/action/jsonBuilderAction';
+import { updateJsonFlag, patchComplete } from '../../redux/action/jsonBuilderAction';
 
 class JsonBuilder extends Component {
     constructor(props) {
@@ -51,8 +51,15 @@ class JsonBuilder extends Component {
         //         clickDelete: false
         //     });
         // }
+        // if (!nextProps.patchCompleteFlag || nextProps.patchCompleteFlag) {
+        //     this.setState({
+        //         patchComplete: nextProps.patchCompleteFlag
+        //     });
+        // }
         if (nextProps.patchJson && nextProps.patchJson.length > 0) {
+            console.log('new patch ', nextProps.patchJson);
             if (!this.state.patchComplete) {
+                // console.log('inside patch file ', nextProps.patchJson);
                 this.patchJson(nextProps.patchJson);
                 // this.setState({
                 //     childItems: nextProps.patchJson
@@ -81,6 +88,7 @@ class JsonBuilder extends Component {
                 this.setState({
                     patchComplete: true
                 });
+                // store.dispatch(patchComplete(true));
             }
         }
         if (nextProps.componentKey && !nextProps.componentKey.includes(':')) {
@@ -107,8 +115,8 @@ class JsonBuilder extends Component {
             childItems: this.props.patchJson
         });
         this.childItems = this.state.childItems;
-        //
-        this.props.componentCreated(this.childItems, this.state.name);
+        //childItems, childName, oldKey, newKey, deleteFlag, childKeyToDelete
+        this.props.componentCreated(this.childItems, this.state.name, null, null, null, null, this.props.componentKey);
         if (this.props.componentKey !== undefined && this.props.componentKey !== 0) {
 
             const strType = { 'label': 'String', 'value': 'String' };
@@ -144,6 +152,7 @@ class JsonBuilder extends Component {
             expanded: true,
             counter: this.counter
         });
+        // store.dispatch(patchComplete(true));
     }
 
     addMore = (index, count) => {
@@ -193,7 +202,7 @@ class JsonBuilder extends Component {
     }
 
     childElementNameChanged(childInd, childValue, oldKey) {
-        console.log(this.state.name, 'child Items ', this.childItems, ' parents - child name - ', oldKey, 'changed to - ', childValue);
+        // console.log(this.state.name, 'child Items ', this.childItems, ' parents - child name - ', oldKey, 'changed to - ', childValue);
         if (childValue !== '' && childValue !== undefined && childInd !== '' && childInd !== undefined) {
             // var childIndex = childInd;
             if (this.childItems.length === 0) {
@@ -226,7 +235,16 @@ class JsonBuilder extends Component {
         this.props.componentCreated(this.childItems, childElementKey);
     }
 
-    componentCreated(childItems, childName, oldKey, newKey, deleteFlag, childKeyToDelete) {
+    componentCreated(childItems, childName, oldKey, newKey, deleteFlag, childKeyToDelete, lastKey) {
+        if (this.props.componentKey === 0 && lastKey !== undefined) {
+            if (parseInt(lastKey.split(':')[1]) === this.childItems.length) {
+                // console.log('last element key', lastKey);
+                // store.dispatch(patchComplete(true));
+                this.setState({
+                    patchComplete: true
+                });
+            }
+        }
         if (this.childItems.length === 0) {
             this.childItems = this.state.childItems;
         }
@@ -245,9 +263,9 @@ class JsonBuilder extends Component {
                     childItems.map((item) => {
                         var itemJsonKey = Object.keys(item);
                         // if (typeof child[childName][itemJsonKey[0]] !== 'string') {
-                            console.log('check TypeError: Cannot assign to read only property "0" of string "Object" - ' , child[childName][itemJsonKey[0]]);
-                            child[childName][itemJsonKey[0]] = item[itemJsonKey[0]];
-                            delete child[childName].type;
+                        // console.log('check TypeError: Cannot assign to read only property "0" of string "Object" - ', child[childName][itemJsonKey[0]]);
+                        child[childName][itemJsonKey[0]] = item[itemJsonKey[0]];
+                        delete child[childName].type;
                         // }
 
                     });
@@ -291,7 +309,6 @@ class JsonBuilder extends Component {
             }
         });
         this.childItems.splice(indexOfChild, 1);
-        console.log('childIndex + childName', childIndex + childName);
         this.setState({
             childDeleteKey: childName ? childIndex + childName : childIndex,
             counter: this.counter
@@ -356,6 +373,7 @@ class JsonBuilder extends Component {
                         isNewElement={this.props.isNewElement}
                         newElementCount={this.state.newElementCount}
                         currentElementIndex={this.props.componentKey}
+                        key={this.props.componentKey}
                         onChangeInputOfElement={this.onChangeInputOfElement.bind(this)}
                         componentCreated={this.componentCreated.bind(this)}
                         elementInputValue={this.state.elementInputLabel}
@@ -388,7 +406,8 @@ class JsonBuilder extends Component {
 
 const mapStateToProps = function mapStateToProps(store) {
     return {
-        updatedRootJson: store.createNewElementReducer.rootJsonSchema
+        updatedRootJson: store.createNewElementReducer.rootJsonSchema,
+        patchCompletFlag: store.createNewElementReducer.patchCompletFlag
     }
 }
 
