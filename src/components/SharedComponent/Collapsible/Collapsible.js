@@ -252,7 +252,7 @@ class Collapsible extends Component {
                                 : ''}
                             <ComponentGenerator className={this.state.isNewElement ? classes.checkBoxClass : classes.hiddenClass} checked={this.state.isRequired} onClick={this.isRequired.bind(this)} type='checkbox' />
                         </div>
-                            {/* // : <div className={classes.requiredClass}></div>} */}
+                        {/* // : <div className={classes.requiredClass}></div>} */}
                     </div>
                     <div className={classes.dropDownClass}>
                         {this.props.currentElementIndex !== 0 ? <ComponentGenerator type='dropdown'
@@ -289,7 +289,7 @@ class Collapsible extends Component {
                 {(this.state.defaultValue.label === 'Object' && this.props.expanded) || this.props.currentElementIndex === 0 ?
                     <div>
                         <ul style={{ listStyleType: 'none' }}>
-                            {this.state.childItems &&
+                            {
                                 [...Array(this.props.newElementCount)].map((e, i) => {
                                     const eleId = i + 1;
                                     const newEleKey = this.props.currentElementIndex + ':' + eleId;
